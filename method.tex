@@ -1,0 +1,97 @@
+\begin{doublespace}
+
+In order to meet all of our goals and satisfy our requirements, a lot of planning needed to be done. We had to learn about gears, perform user studies, and implement the software. This section will describe in detail the various steps taken in order to meet our goals.
+
+\subsection{A Term}
+
+\subsubsection{Gear Knowledge}
+
+The first thing we did in our project was to learn about gears. Even though the existing gear train system (\cite{holman_automated_2018}) includes all the necessary information and code about gears, we were still required to learn about gears. The old system does not provide a preview of the gears for the user, or perform any analysis of the gear train, so we needed to learn what equations and information were needed to draw a gear.
+
+Since the old system has support for different types of gears then the new system should too. We needed to learn distinguishing features about each type and how to draw them, since each gear type will have different equations and information required. We also needed to know general gear terminology such as ``pitch circle'' and ``pressure angle'' since the system includes these terms as user options, and some terms, such as ``pitch circle'', are needed when drawing gears.
+
+More information about what we researched and learned about gears can be found in Chapter~\ref{sec:lit}.
+
+\subsubsection{Planning}
+
+After we learned about gears, we started planning the implementation of the project. Completing a large project such as this one requires planning. Before making any decisions about any aspect of the project, we needed to consider alternatives and justify the eventual decision.
+
+For more details about the design of the user interface and backend system, see Chapters~\ref{sec:design_ui} and~\ref{sec:design_sys}, respectively.
+
+\subsubsection{Framework}
+
+The first major decision we made was which software framework to use. The main goal of the project was to convert the existing gear train system to the WPF (Windows Presentation Foundation) approach to developing user interfaces, which was determined before the project started. This required using the C\# programming language since that is the language that WPF uses. There are two major C\# frameworks: .NET Framework and .NET Core. Each is described in more detail in Chapter~\ref{sec:lit}, but it will be summarized here.
+
+.NET Framework is a software framework created by Microsoft in 2002 for the C\# programming language (but was later adapted for many other languages, see (\cite{wenzel_common_2019})). The .NET Framework is more widely used than .NET Core since it has been around for much longer, but it is no longer being updated and no new features will be added to it. 
+
+.NET Core is another software framework created by Microsoft in 2016. It is designed to be the successor to .NET Framework and has much better performance, as well as having new features always being added. As of November 2020, Microsoft has created a ``unified'' .NET which will have long term support, with updates already planned through at least the end of 2023.
+
+Since WPF works with both .NET Framework and .NET Core we decided on .NET Core. In summary, .NET Core has better performance than .NET Framework, has future releases planned with new features. That will allow a future project group to convert the application to the Universal Windows Platform (UWP), the newest Windows desktop application framework.
+
+\subsubsection{Study of the Old System}
+
+Before designing our system, we first needed to determine what users did not like about the old system and what they would like to see added. A user study was conducted in an Introduction to CAD (ES 1310) class at Worcester Polytechnic Institute, with a total of 43 participants. Details about the study data can be found in Chapter~\ref{sec:data}. Each participant was given a survey before they began the given task. During the survey, the participants were asked about their major, year, and experience with gears. The participants were then asked to complete a short task using the software. In the tutorial document which explains the task and how to complete it, the user is given information about four gears that they need to create using the system. The full tutorial document, as well as answers to some short response questions, can be found in Appendix~\ref{app:survey}. Once all the tasks were completed, the users were asked about the experience in another survey. This survey asked about their experience using the software, such as what was easy, what was hard, and what should be added in the future. 
+
+An analysis of the study revealed a few things (see Chapter~\ref{sec:data} and Chapter~\ref{sec:eval} for full study results). A majority of participants said that the old system was very easy to use and easy to input the data (although tedious), but many also had negative comments about the use of the program. There were some problems preventing them from completing the tutorial, lack of feedback from the program about the results of user interaction. Many participants stated that they wanted a preview of the resulting gear train, further justifying our need to add a preview window.
+
+Given these comments, we placed most of our focus on the user experience and interface so they users do not get ``stuck'' in one section of the program and are unable to continue. Some feedback from the system about certain things would be helpful to the user, such as popups appearing in the foreground rather than in the background, for example.
+
+\subsection{B Term}
+
+\subsubsection{User Interface Mock-ups}
+Before creating hand-drawn mock-ups of the new UI, we created it in XAML using the Visual Studio Designer. The previous designs were not a good starting point because they made many assumptions and had too much influence from the previous WinForms design. We began to hand-draw a new set of mock-ups based on these XAML designs. Chapter~\ref{sec:design_ui} discusses these mock-ups and design decisions in more detail.
+
+Before creating any mock-ups, we created a chart showing user tasks (Chapter~\ref{sec:design_sys}, Figure~\ref{fig:func_dia}). These tasks are the specific actions a user might take in the application. For example, opening the application is a user task that would display the start screen on the left bar. The screens that were drawn included the start screen, gear sets screen, edit gear set screen, edit shaft screen, and the analyze shaft and gear screens.
+
+We kept the concept of a left bar, an interface where gear train attributes would be displayed and edited. We decided to keep this since it is a design pattern that is commonly used in other 3D applications such as SolidWorks. The content in the left bar was what had a significant change. It went from always displaying the gear train to allowing the user to edit and view the gear train through different left bar interfaces. The static top bar was also kept from the previous design since we knew that there were going to be actions that are required for the application to be complete and work at various times in the application. The most apparent and newest aspect from the drawn designs was the big 3D box that took a majority of the whole screen. The reason for its size was because being able to visualize the gear train design was a major requirement for GearTrain. Chapter~\ref{sec:design_ui} discusses all UI design decisions in more detail.
+
+\subsubsection{Importing Code from the Old System}
+
+In the previous application most of the code relating to the interface and the logic for generating the gear train in SolidWorks was in one file and making direct calls to the interface. So the first step in moving the code was to extract the the logic code into separate files. This included various model classes and the methods that depended on them. While we did this, the calls relating to interface code were removed and had to be rewritten to work in WPF. There was also code relating to a library, called GraphSynth, that was not in use. We did not transfer it to the new project as there were no plans to incorporate that functionality at this point.
+
+\subsubsection{New Code and Interface}
+
+We also added some new code that would help the new system be more modular and remember user settings. We made a function that would look for the SolidWorks application and, if not found, it would prompt the user for the location. Along with that we added a class that would allow for information to saved when the application is closed. This would allow for the SolidWorks path, download path, and user settings to be saved.
+
+The code for the user interface required a different strategy. Not only was redesigning the interface a main requirement, but the application also needed a new framework, WPF. This meant that we would not be able to just make edits on the previous design, but we would have to start from scratch. Luckily, we had preemptively created rough XAML mock-ups, so we could use those as starting point. We also used the drawn designs to then more quickly create the different screens and controls.
+
+After porting the existing code and minimally completing the interface, we began to start connecting them. This meant implementing user actions such as navigating to different screens and windows, clicking buttons, and inputting data into controls. We did this by adding code that was executed when certain events arose. These types of events were defined by the WPF framework and can include clicking, typing, and hovering.  This allowed us define all the actions that happen when a user interacts with the interface.
+
+\subsection{C Term}
+\subsubsection{Application Features}
+
+We started off C term by completing required features for the application. Those features included a working 3D representation of the gear train and a screen that allows editing of a shaft and its connecting components. A functioning 3D viewer was a requirement that we set at beginning of the project. The shaft editing screen was previously implemented in the WinForms version of the application, so we deemed it necessary to implement a screen that accomplished the same functionality.
+
+Before the 3D viewer was considered working, it showed a static gear set that could only be moved around. We wanted a dynamic 3D representation of the current gear train being designed in the application, which may include multiple gear sets. Thanks to the code previously worked on by a past team, we were able to use the code for generating the gear train in SolidWorks to also display the position and scale of the gear sets to a sufficient degree. For example, the code included coordinate positions that we could map to the 3D viewer coordinates. It also contained properties of the gear, such as the number of teeth, that allowed us to calculate the size of the gear and shaft. While we were able to represent the scale of the gear train components, we are were not able to get an accurate representation of the gear train that shows the true shape of the gears, shafts, and bearings. We opted to use a rudimentary shape, the cylinder, to represent gears and shafts. We thought that was acceptable since the purpose of the 3D viewer was to see how the users' changes affected the design. Additionally, we had set a requirement to deliver a working 3D viewer rather than a complete one. A future MQP team may continue to refine the 3D viewer to make the representations more accurate.
+
+The previous team who worked on the WinForms version of the application had created a screen to edit the shaft and the alignment of the gears and bearings connected to it. It had a 2D top down representation on the alignment of all the components, also called the ``Shaft Alignment'' screen. The user could edit the position of the gears and bearings along the shaft, as well as the length of the shaft itself. We used this as a base since we thought it was a simple and quick solution to have the user understand the current state of the shaft. On the other hand, we wanted a more visual way of editing the positions and properties. We implemented a drag feature that allows the user to click and drag the gears or bearings along the shaft while automatically changing the position values for them. When changing gear or bearing position along a shaft, certain constraints need to be met. For example, gears and bearings cannot overlap on the shaft. We added a method to calculate many constraints and stop the user from implementing the design if these constraints are not met. A user might not be aware of the dragging feature, so we added text to the interface that explains how the user can utilize it.
+
+\subsubsection{UI Revisions}
+
+Thanks to our weekly meetings with our advisors, we were able to get feedback on the user interface very frequently. One of the main issues we had was a lack of consistency. The color gray, which is typically meant to show something is disabled, was being overly used. We had gray on buttons, backgrounds, lists, and borders. To eliminate this, we changed the color of the different sections of the application. For example, the top bar is now black, while the left bar is gray and the 3D view background is white. Then we changed the colors of all buttons to a very light blue called ``Alice Blue''. Along with the color of components, the default WPF buttons were similar to other UI components, so we also changed their border radius to have them be more identifiable and less confusing for the user. Changing the border radius makes it so the corners of buttons are not sharp and pointy but smooth and rounded to distinguish them from text fields the user can type in. We also changed many margins of the application so the components appear to be in a group, and follow good UI and HCI practices (as described in Chapters~\ref{sec:lit} and \ref{sec:design_ui}).
+
+Often the user might select a button to do a task or navigate somewhere in the application. The user might not actually want to do it, instead wanting to save their gear train design so it is not lost, or cancel the current design and start over. In the application, the left bar contains various screens, depending on the state of the application (i.e., main menu, editing a gear, or viewing all the gear sets). When the user is on one screen and wants to navigate back, the application will prompt the user if they want to save before leaving or cancel to stay in the same screen. We used the word ``Back'' to imply that the screen can navigate to the previous one shown. Previously, when a user wanted to delete a gear set, they would just press ``Delete'' and the gear set would be gone without warning. In case the user did this by mistake or changed their mind, we added a confirmation message to make sure they really want to do an action that cannot be undone. Another example was when we added confirmation messages after a user exports an image or 3D model file to make them aware that the export was completed. Before this addition, the user would just press the button and there would be no indication of how long it took or if the export was successful. All these user messages and confirmations have been added throughout the application to help the user.
+
+
+\subsubsection{User Study}
+
+To prepare for the user study in C term, we not only wanted a working application from start to finish, but a help website as well. This website would contain information on how each part of the application functions and video tutorials for important tasks that users may need guidance for. These tutorials included opening and saving a design, using the 3D viewer, editing a shaft, and creating a gear train design from start to finish.
+
+We had done an earlier study on the previous team's application with users who had little experience with gear train design or using SolidWorks. This time, the study was done in a 4000-level class, which is the highest level undergrad course at Worcester Polytechnic Institute. Because it is an advanced level Mechanical Engineering class, most of the students are Mechanical Engineers, as opposed to the A term study where we had participants of many disciplines. The previous study was guided and gave the user very specific instructions, making it very difficult to not accomplish the task successfully. This time, in order to test the new interface and the users' ability to learn the application, we created an additional unguided section to the study. The unguided section was completed after the guided section. We removed more explicit instructions to see if users could complete this unguided section using what they learned in the previous section. Instead of giving specific instructions to select a gear set, edit it, and fill in the given values, we now just give them the values and tell them to complete the design and generate it in SolidWorks without any instruction.
+
+\subsection{D Term}
+
+\subsubsection{Writing}
+
+Most of the writing had been done or drafted by the start of the term. This meant that we had writing done for all of those chapters, however they could use 1-2 revisions to fix grammar and content issues. These chapters excluded methodology for C \& D term, data analysis for C \& D term, data evaluation for C \& D term, and the conclusion. So this term we started by focusing on writing the parts that related to C-term. That way we could work on the D-term-related writing after we received the data from from the study.
+
+\subsubsection{Study}
+
+The D term study (referred to as the ``D21 Study'') had the same tasks and tutorials as the C21 study since both were testing the same software, GearTrain. All that was needed was to make copies of the C21 surveys so the data can be kept separate. Then we sent it out for students to complete. The number of users in this study was going to be greater than any study we have done so far. This was due to there being two courses in which students/users were chosen from. This lead to there being more work involved filtering and analyzing the data. We had to separate users by skill level and categorize written responses. There were also some issues with the remote desktop and links not working. The WPI remote desktops that participants were using to complete the study stopped working for some participants, preventing them from opening SolidWorks at all. We were using tiny.cc, a website that shortens the number of characters a web link has. During the final day of submission for the study, tiny.cc went down, and our links did not work. The links had to be changed so users could continue.
+
+\subsubsection{Showcasing}
+
+WPI has a tradition of showing student work on MQP Project Presentation day. This year it was virtual, so it meant there were going to be more digital requirements. One being a 5 minute video presentation with a demonstration of the application and an explanation on what are project is, the motivation, and the accomplishments. To accomplish this, we created a slideshow and a demo video that we would talk over and send to the CS Department. The other requirement was
+to make a virtual poster in a PDF file. The poster would include general information about the project including abstract, goals, data analysis, and images. We did this by creating a slideshow, with more information than video slideshow, and exporting that into a PDF file that has the slides laid out
+
+\end{doublespace}
