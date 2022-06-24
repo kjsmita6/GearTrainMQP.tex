@@ -1,0 +1,25 @@
+\begin{doublespace}
+Currently, there is a software application that generates models of gear boxes in SolidWorks using information entered by the user, including the number of gears, coordinates, and number of teeth (\cite{holman_automated_2018}). One of the problems with the current application is that it was developed using an outdated graphics framework (a package of pre-written code which someone can use in their own code) called Windows Forms, released in 2002. Since Windows Forms is so outdated, and no new features are being added in the future (\cite{allen_wpf_2014}), the application code is hard to extend when more functionality and complexity need to be added. Additionally, most new developers are learning WPF (Windows Presentation Foundation, a newer framework) instead of Windows Forms, so the system will be easier to maintain in the future by new developers who use C\#.
+
+The current application is also not very user friendly since it is all text-based. The program does not provide enough feedback to the user, such as if SolidWorks is not open when they try to generate the model. The user may not know what their design will look like until the SolidWorks finishes the generation, which can take a long time depending on the user’s computer specifications and the complexity of their gearbox. This can cause a lot of wasted time for the user if mistakes were made, requiring them to run the generation again.
+
+To resolve these problems, we will rebuild the application in WPF, with a new design and with scalability in mind. Since we will not be the last group to work on this software, it is important to write code that other people can understand and extend. We will update the design, implement a new user interface, and add the ability to visualize the gearbox the user is creating.
+
+\begin{singlespace}
+In summary, our goals are:
+\begin{itemize}
+    \item Convert the existing gear generation system from Windows Forms to WPF.
+    \item Create a 3D previewer of the user's gear design.
+    \item Run user studies before and after our improvement to gather user feedback about the systems (the old and new versions).
+\end{itemize}
+\end{singlespace}
+
+A new user interface (UI) will be created using WPF. This interface will be written in a new language, XAML (eXtensible Application Markup Language, \cite{lee_xaml_2020}), and the backend code will use .NET Core instead of .NET Framework since .NET Framework is no longer being updated by Microsoft (\cite{hunter_net_2019}). The UI must also be designed using the principles of human-computer interaction (HCI), such as efficiency and ease of use.
+
+A preview window will be created so the user can see their design before it is generated in SolidWorks. Since SolidWorks can take a relatively long time to generate, up to a few minutes sometimes, it can cause a lot of wasted time for the user if there is an error in their design. They would have to start the design over and wait for SolidWorks to generate the model again. However, a preview of their design could prevent this from happening.
+
+To see how the old system should be improved and to gather feedback about our new system, we will conduct user studies of the existing system and our new system. The study of the existing system will ask questions about user experience and what users would like to see improved, as well as what they think should not be changed. The study of our new system will also ask about their experience. That can be used to measure the relative improvement of the system versus the old system, as well as how it can be improved in the future.
+
+This section described the requirements and goals of this project in detail. The next section will discuss the background research that was done to understand the problem further and to help plan our implementation.
+
+\end{doublespace}

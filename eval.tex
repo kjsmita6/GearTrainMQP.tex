@@ -1,0 +1,81 @@
+\begin{doublespace}
+
+After collecting data from our surveys, we can use the results to draw conclusions about the systems and how they can be improved. The study of the old system (\cite{holman_automated_2018}) was used to determine what needs to be improved, and the study of our new system was used to determine how users responded, how the users responded to it compared to the old system, and what can be done in the future to improve it further. As with Chapter~\ref{sec:data}, each of the three studies will be referred to here as the A20 study, the C21 study, and the D21 study.
+
+\subsection{Study of the Old System (A20)}
+
+\subsubsection{User Demographics}
+
+The section in the initial survey about demographic information indicated a few things. First, a majority of participants were mechanical engineering (ME) students. This was expected, as this class is taken by most ME students at Worcester Polytechnic Institute, and will most likely be a majority of the users of the system. However, many other majors were also represented outside of ME. It is important in a user study to get participants of various backgrounds in order to get the most complete feedback possible.
+
+\subsubsection{Previous Experience}
+
+Since the classes that the study took place in were introductory-level classes, we were expecting many of the participants to have only a little to no knowledge about CAD, and even less about gears. According to the study, most of the participants were freshman, so this study would have been conducted during their first term in Worcester Polytechnic Institute where they may not have taken any classes related to gears yet. 
+
+In terms of gear design principles, most users reported that they are not very experienced. This is fine for the purposes of this software since the whole point of the program is to make it easier to design gears. This coincides with some of the free-response questions in which the participants said they did not know what data they were entering or what some of terms mean. Someone with no gear experience may not know what ``pressure angle'' means, for example, but someone with a lot of experience would.
+
+More participants reported higher familiarity with CAD programs such as SolidWorks, specifically about designing gears. This is expected since the study took place in an Introduction to CAD course where students are given their first CAD experience.
+
+\subsection{User Feedback}
+
+A summary of user feedback can be found in Chapter~\ref{sec:data}, and full responses to all free-response questions can be found in Appendix~\ref{app:survey}. The main purpose of this study was to gather user feedback about the existing gear design system, including what the users like about it, what should be improved, and whether anything should be added.
+
+In general, the program was received with mixed feedback. 48.6\% of users found the data easy to enter, but only 29.7\% of users commented that the interface easy to use, with 21.6\% of users saying the program is easy to use in general, especially when compared to designing a gear train by hand. Even though many users found it easy, many users thought that it needed improvement. Some said that it was very tedious to enter in all the information. Others did not know how to use the software at all since the program offers no help. A little more than half of study participants encountered a bug or problem that prevented them from successfully completing the tutorial.
+
+About half of users specifically mentioned that they wished there was a way to preview the gears that they were creating. The old system is all text based, and there is no way to see what you are making until the design is sent to SolidWorks and completed, which can sometimes take many minutes. These users wanted a preview of the gears so they could visualize the results of the numbers they are entering.
+
+Given these points, we focused on two things during development of the new gear design system. The user experience needed to be free of bugs which prevent the user from completing their task, and the system needed to be more responsive to the user, such as giving them feedback when there is an error or when they try to do something that is not allowed. The user interface also needed to have some way for the user to preview their gear train before it is sent to SolidWorks.
+
+\subsection{GearTrain Study (C21 and D21)}
+The C21 and D21 studies primarily differ from the A20 study due to the difference in study population. The C21 and D21 study were done using advanced Mechanical Engineering students (mostly juniors and seniors), whereas the A20 study was done in an introductory level course (primarily sophomores). As explained later in this section, the differences in population demographics may help us determine the differences in user experience based on how knowledgeable the user is about the topics explored in the program.
+
+\subsubsection{Previous Experience}
+As opposed to the A20 study, where the students were mostly sophomores of various majors, the C21 and D21 studies were conducted in two 4000 level Mechanical Engineering courses and one 2000 level course at Worcester Polytechnic Institute (4000 level is the highest undergraduate course level, typically populated by juniors and seniors). Since most students were juniors and seniors with a Mechanical Engineering background, it was expected that these students were familiar with gears and had at least some experience using CAD. 
+
+This hypothesis was proven by the C21 and D21 survey results, with 69\% of participants rating themselves a 3 or higher (out of a 5 point scale) with how experienced they are with gears, and 87\% of participants rating themselves a 3 or higher with their CAD experience. This is much higher than the A20 study, where only 43\% of users rating themselves a 3 or higher in gear design and 48\% of users a 3 or higher in CAD usage. From these results, we expected that users in this study may be better at using the software since they would have a better understanding of gear terminology and manipulating the 3D viewer (since the controls are the same as SolidWorks).
+
+\subsubsection{User Feedback}
+Similar to the A20 study in the previous section, a summary of user feedback can be found in Chapter~\ref{sec:data}, and full responses to the free-response questions can be found in Appendix~\ref{app:survey}.
+
+Compared to the old system tested in the A20 study, participants in the C21 found our GearTrain software easier to use. The mean difficulty rating (out of 5, with 5 being the most difficult) for completing the tutorial was 1.56 for GearTrain, compared to 1.77 for the old system. The mean difficulty rating for modifying gear parameters for GearTrain was 1.44, compared to 1.7 for the old system. Both systems seem to be easy to use, but GearTrain is slightly easier. On the other hand, for participants in the D21 study, the software was more difficult to use. The mean difficulty for completing the tutorial was 1.93 for GearTrain. The mean difficulty for modifying gear parameters in GearTrain was 1.54. These higher scores were attributed to students not having been taught about gear train design and thus having a harder time understanding and working with GearTrain.
+
+In the free-response sections for all studies, the participants were asked to enter anything that they found easy or difficult with the software. A major issue that participants had with the old system was the lack of system feedback for certain actions. The main complaint was that there was no way to visualize the gears they were creating, so it was hard to modify the gear parameters. With the GearTrain program, and the 3D visualizer, there were no complaints that the gear parameters were hard to modify.
+
+Many of the complaints concerning the old system were about user interface bugs and problems that prevented certain tasks from being done. For example, some users reported that the button for adding a new gear set did not appear on their screen (it was below the visible part of the screen), so they did not know how to add a new gear set because the button was invisible. It was possible to scroll to it, but users did not know there was anything below since there was no visible scroll bar. This was not an issue with GearTrain since we removed the need to scroll (everything is navigable via a ``Back'' button at the bottom on the screen).
+
+There was also an issue where some text fields would get a gray background. Usually a gray background indicates the control is disabled, meaning the user cannot type in it or interact with it, but this was not the case in the old program. The text box became gray, but text could still be entered in. This was a general issue with consistency that we attempted to fix in GearTrain. Indeed, there were no complaints about UI consistency in GearTrain. There were some other interface-related feedback. For instance, saving in the edit gear set screen was hard for the users to understand. Participants would often get confused that they could only save when they left the screen. This was not the case as the system was saving was automatically and would prompt users if they wanted to keep their changes when they left the screen.
+
+A major problem that existed at the time of the C21 and D21 study were issues with SolidWorks. On some occasions when the design is sent to SolidWorks to be generated, an issue with the SolidWorks generation code would cause SolidWorks to crash if it was already open beforehand. As a result, we instructed participants to make sure SolidWorks was fully closed. This was a major annoyance to the user, and some users were unable to fully close SolidWorks due to not knowing how, even though it was explained. This is not a problem that the user should have to worry about, so this may have negatively affected the survey outcomes. Indeed, many participants made comments relating to the SolidWorks problem (see Chapter~\ref{sec:data} and Appendix~\ref{app:survey}). Another SolidWorks issue participants commented on was that sometimes the the gear train design was being incorrectly generated. The generated 3D items in SolidWorks were extremely oversized and unusable. This issue was an even greater annoyance as we were unable to reliably reproduce the bug and do not know of any solution. This led to some participants unable to fully complete the study. 
+
+\subsubsection{Recommended Changes to the System}
+One of the survey questions asked participants to write down anything that they recommend we change in the software, including additions and removals of features. See Appendix~\ref{app:survey} for all the recommended changes to the software. Selected comments are shown below.
+\begin{quote}
+    \emph{Add the feature to snap to a view like in SolidWorks (left right top bottom front back etc.)}
+\end{quote}
+\noindent There was a part of the 3D viewer which allowed the user to ``snap'' to certain views. This feature was removed in order to add an axis view, however the Helix3D toolkit may allow both to be present (\cite{bjorke_helix_2020}).
+\begin{quote}
+    \emph{I would allow for an easier and faster way to switch between editing gear sets, such as a tool on the header of the software window}
+\end{quote}
+\noindent A few participants requested an easier way to change gear sets. Currently, you must press ``Back'' to get back to the list of gear sets, then select a new one to edit. A toolbar containing buttons for all the current gear sets could be added to the top bar to allow the user to switch between gear sets easily.
+\begin{quote}
+    \emph{A save button after you change the gear properties.}
+\end{quote}
+\noindent Many participants were confused about the gear editing interactions. The modified gear data is saved automatically, but no feedback is given to the user that it is saved. There is a ``Revert'' button in case they made a mistake and need to undo everything, and when they click ``Back'' to go back to the list of gear sets they are given the option to revert. Users are confused about whether gear data is saved automatically.
+\begin{quote}
+    \emph{SolidWorks Crashing}
+\end{quote}
+\noindent There was a known issue where SolidWorks and all its processes need to be completely closed before GearTrain generates a design, otherwise SolidWorks may sometimes crash. This is caused by an issue in the SolidWorksMacro code file, which was not created by this project team nor the team that worked on the previous gear design application.
+\begin{quote}
+    \emph{Gear analysis abilities}
+\end{quote}
+\noindent A few users wanted the ability to perform an analysis on their gear train. Simple gear analysis input and output windows have already been created. They simply need to be integrated with the analysis code written by Professor Radhakrishnan. 
+\begin{quote}
+    \emph{Enhancing the 3D visuals}
+\end{quote}
+There were users  that in the future would like to see more detail in the 3d viewer. GearTrain only has rudimentary shapes, such as cylinders. to show the structure of the gear train designs. Adding things like gear teeth and more complex shapes to create detailed 3D models would further let users understand how their design will be generated.
+\begin{quote}
+    \emph{SolidWorks Incorrectly Generating}
+\end{quote}
+\noindent There was another known issue where SolidWorks would generate the gear train design incorrectly even though all parameters were correctly inputted. This led to several incorrectly generated parts of the design like, large gears, unaligned bearings, and unwanted bounding boxes.
+
+\end{doublespace}

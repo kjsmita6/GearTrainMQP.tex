@@ -1,0 +1,75 @@
+\begin{doublespace}
+As explained earlier, there are two main goals of this project: to convert the existing gear train design system (\cite{holman_automated_2018}) to Windows Presentation Foundation (WPF, a graphical user interface system made for Windows) and, in this new system, to provide a preview of the gear train that the software will generate in SolidWorks. The automated gear generation software developed by Holman and Okafor greatly simplified the process of designing a gear train. However, the software still left many things to be desired. Working on a large project such as this one requires a lot of planning and research. User interface (UI) design has many different aspects to be considered, such as ease of use and how aesthetically pleasing it is, and creating software for gears requires knowledge of gears and how gear trains are created. This section will briefly discuss the various parts of our project and the related work in each part that we will need to use.
+
+\subsection{Computer Systems}
+One of the main goals of this project is to convert the system made by Holman and Okafor to a WPF application. Their system was written in a framework called Windows Forms (WinForms), a platform for Windows computers for creating graphical user interfaces (GUIs) (\cite{microsoft_visual_2003}). Windows Forms was created in 2002 and is an event-driven system that provides a graphical user interface to the low-level Windows API. Windows Presentation Foundation (WPF) is another framework for creating GUIs for Windows that was created in 2006. WPF is desirable for a few reasons. According to Microsoft in 2014, Windows Forms has entered ``maintenance mode'', meaning no new updates will be released but bugs will still be fixed (\cite{allen_wpf_2014}). As technology improves over time, we may want to include new features in the application that will not be available in Windows Forms. WPF has long term support and is continuously being updated with .NET Core so new features will always be added.
+
+In addition to choosing between Windows Forms and WPF, we also needed to choose a language runtime that would suit us. The system by Holman and Okafor was creating using .NET Framework, a runtime created in 2002 along with Windows Forms. Code written in the .NET Framework runs in a ``virtual machine'' called the Common Language Runtime (CLR). The CLR is responsible for application security, memory management, and exception handling, among other things (\cite{wenzel_common_2019}). Similar to Windows Forms, no new updates will be released for .NET Framework, and new features may be desirable. .NET Core was designed as the successor to .NET Framework, with new releases planned through the end of 2023. At the time of writing this paper, a new framework has come out, .NET 5. .NET 5 is a continuation of .NET Core 3, but since it does not have long term support (other future versions of .NET will have long term support, such as .NET 6), we have decided to use .NET Core 3 (\cite{lander_introducing_2019}). .NET Core has better performance than .NET Framework (\cite{toub_performance_2017}) and provides cross-platform support in case a future project group would like to add support for running the program on Mac or Linux.
+
+In terms of the programming languages we could use, we were limited to C\# for a few reasons. The SolidWorks API that the program uses to generate the gear trains is written in C\#. The software is also made for Windows which is what C\# was originally designed for. Finally, the old system was written in C\# and we needed to reuse some of the old code. It is also a language that all team members are very familiar with, so there was no time needed to learn the language. C\# is an object-oriented programming language created by Microsoft in 2002 as a ``simple, modern, general-purpose object-oriented language'' (\cite{kulikov_history_2020}). According to ECMA standard (ECMA-334) , the language is designed to support several software engineering principles, such as type checking and automatic garbage collection. It is also designed to run on any operating system, from embedded systems to hosted systems, and is designed to be very economical with regard to memory (\cite{ecma_international_c_2017}). All these features help ensure a system implementation that is both free of errors and resource-conservative.
+
+\subsection{System Design}
+
+The first part of any large project is determining the problem you are trying to solve, what you need to solve it, and why you need to solve it. Fred Looft, a professor at Worcester Polytechnic Institute, states in his report, \emph{Systems Engineering for Capstone Projects}, that ``the problems being solved are rarely well defined'' (\cite[p.~5]{looft_systems_2018}). It is impossible to solve a problem unless you know what it is. In addition, you must also create a set of requirements that your system must have in order to solve the problem. In his experience, Professor Looft says that a main reason why projects fail is ``poorly defined system requirements'' (\cite[p.~24]{looft_systems_2018}). Before attempting to solve the problem, or even researching how to solve it, we must first have a concrete definition of the problem and the requirements that our system will have in order to solve it.
+
+\subsubsection{UI Design and Evaluation}
+
+Once you start developing your system, if it is to be used by users other than yourselves, it is important to keep the concepts of human-computer interaction (HCI) in mind. You should design for the users and their task, \emph{not} yourself. There are also many ``metrics'' of human-computer interaction that are used to evaluate a piece of software. These include speed of performance, error rate, and time taken to learn. These metrics should be used to evaluate any user software to see whether some things about the application need to be changed to make it more user-friendly (\cite[p.~105-106]{stone_user_2005}). Stone, et al. also discusses ``the five Es'' of user experience. These are: effective, efficient, engaging, error tolerant, and easy to learn. Each is described in more detail in Table~\ref{tab:five_es}.
+
+\begin{singlespace}
+\begin{table}[htbp]
+    \centering
+    \caption{The five Es of user experience (\cite{stone_user_2005})}.
+    \label{tab:five_es}
+    \begin{tabularx}{1\textwidth}{||Y|Y||}
+        \hline \textbf{Dimension} & \textbf{Description} \\
+        \hline \hline 
+        Effective & The completeness and accuracy with which users achieve their goals. \\ \hline
+        Efficient & The speed (and accuracy) with which users can complete their tasks. \\ \hline
+        Engaging & The degree to which the tone and style of the interface makes the product pleasant or satisfying to use. \\ \hline
+        Error tolerant & How well the design prevents errors or helps with recovery from those that do occur. \\ \hline
+        Easy to learn & How well the product supports both initial orientation and deepening understanding of its capabilities. \\ \hline
+    \end{tabularx}
+\end{table}
+\end{singlespace}
+
+\newpage
+
+In addition to these metrics, there are also ten ``heuristics'' described by Nielsen (\cite{nielsen_10_1994}). A description of each heuristic can be found in Table~\ref{tab:heuristics}. These heuristics could be applied to the design after it is finished, or the design could be created with these heuristics in mind. They are mainly about ease of use, such as error recognition and prevention, consistency, and making the interface aesthetically pleasing and simple. In addition to a brief introduction to these points, Nielsen also provides short videos explaining them in further detail. When creating a user interface, all these points must be considered to ensure that the interface is as easy to use and understand as possible.
+
+\begin{singlespace}
+% Would rather use h instead of H but the table is too big.
+\begin{table}[H]
+    \caption{List of user interface heuristics (\cite{nielsen_10_1994}).}
+    \label{tab:heuristics}
+    \begin{tabularx}{1\textwidth}{||Y|Y||}
+    \hline
+    \textbf{Heuristic} & \textbf{Description} \\ \hline \hline
+    Visibility of system status & The system should always keep the user aware of what is going on \\ \hline
+    Match between system and the real world & The terms and phrases used should use words that are familiar to the user, rather than system-oriented terms. \\ \hline
+    User control and freedom & User should have a way to ``escape'' their current state if they make an error, also the system should support undo and redo. \\ \hline
+    Consistency and standards & The user should not have to wonder whether different words, situations, or actions mean the same thing. \\ \hline
+    Error prevention & The system should be designed to prevent error conditions from happening. \\ \hline
+    Recognition rather than recall & Options should remain visible throughout the application to reduce the user's need to memorize. \\ \hline 
+    Flexibility and efficiency of use & The system should cater to both inexperienced and experienced users by using accelerators such as keyboard shortcuts. \\ \hline
+    Aesthetic and minimalist design & Dialogues should only contain useful information or information that is needed frequently. \\ \hline
+    Help users recognize, diagnose, and recover from errors & The user should be provided with error codes in easy-to-understand language, language that clearly indicates the problem, and a suggestion for a solution. \\ \hline 
+    Help and documentation & Provide documentation that is easy to search, focused on the user's task, lists concrete steps, and not too large. \\
+    \hline 
+    \end{tabularx}
+\end{table}
+\end{singlespace}
+
+\subsubsection{Display of Gears in 3D}
+
+The actual process of generating the user's design in SolidWorks can take a lot of time depending on the user's computer specifications, meaning that if they make a mistake they are required to start over and wait for it to be generated again. To prevent this from happening, a sort of ``preview'' should be added to the program so that the users can see their gear train design before the design is sent to SolidWorks. There are many systems that implement a preview of the user design in real time, one of which being OpenJSCAD, a website which allows the writing of code to generate objects without requiring a large program to be installed such as SolidWorks (\cite{mueller_openjscad_2018}). OpenJSCAD displays changes to the object in real time, a feature that we believe would make the gear train design system much easier to use. OpenJSCAD is made in Javascript, which we would not be able to use in our program because it is a different language, but there is a system called Edge which allows writing Javascript code inside of the C\# programming language, the language our program is written in (\cite{janczuk_edgejs_2017}). If OpenJSCAD has code that could be useful to us, such as drawing the 3D image of a gear, we can use Edge to use the code within our program, otherwise we can try to adapt their code to ours. There is also a website called Gear Generator which also shows changes to the gear design in real time (\cite{vincze_involute_2014}). Other computer-aided design (CAD) programs also show changes to the design in real time, including SolidWorks, so having something like this is desirable. Designing anything using a computer without being able to quickly see the resulting design would be extremely difficult, and the whole point of CAD is to make design easier.
+
+\subsection{Gear Concepts}
+
+Gear design is very complicated. To start, there are lots of types of gears. The most common is the spur type, but there are 8 types in total, according to KHK Gears, a Japanese manufacturer of gears (\cite{kohara_gear_industry_introduction_2015}). When an engineer designs a gear train (a ``train'' of gears, where the turning of one gear results in the turning of another gear down the train), they must choose the gear types that work best for their purpose. For example, helical gears are best used in high-speed applications, whereas miter gears are simply used to change the direction of rotation without changing the speed. There are also many equations used to create gears. Code Project, a website where users can write articles about code, features an article written by Lars Rasmussen about creating gears in code (\cite{rasmussen_drawing_2015}). Looking through the code shows many equations that an engineer would need to use in order to draw a gear. We will most likely need to use these equations when creating our gears in code and displaying them for the user.
+
+In addition to designing, an engineer is also required to analyze and optimize the gear train. One type of analysis is analyzing all the forces acting on the gear (\cite{radhakrishnan_introduction_2020}). A gear train can also be analyzed to determine the different stresses on the gears and if the gears can handle it, as there are some gears more suited to high-speed application. Including a feature for analyzing a gear train would be very helpful for a gear designer; to do this we will need to know all the forces that act on each gear type, as some forces do not act on certain types (e.g. helical gears have an axial force but spur gears do not). Gear trains can also be optimized to minimize cost, weight, and power loss, while still keeping the main functionality (\cite{swantner_topological_2011}). Optimizing can be a lengthy process, as each design candidate must be checked against a set of user-defined constraints and then checked against the other optimizations to select the best one. A gear train engineer may want the ability to automatically optimize their design, since a computer can perform the calculations much quicker than a human.
+
+This section has explained some of the related work to this project and how it could be used. In the next section, we will briefly describe the steps we took during the project, including design, implementation, and testing.
+
+\end{doublespace}

@@ -1,0 +1,52 @@
+\begin{doublespace}
+
+The following chapter will explain the implementation of the project in great detail. It will be used to show how the design decisions in Sections~\ref{sec:design_ui} and \ref{sec:design_sys} were implemented in the code.
+
+\subsection{Singleton Pattern}
+
+As explained in Section~\ref{sec:design_sys}, some objects in this project were implemented using the singleton pattern, where there is exactly one instance of an object which is accessible throughout the code. The two singleton objects, \texttt{GearBoxInfo} and \texttt{GearBoxSettings} were designed with thread-safety in mind (since these objects may be accessed from different threads). Considering this need, each singleton class is defined as seen in Listing~\ref{lst:singleton}. The lock object defined on line 16 guarantees thread-safety by ensuring that only one thread may access \texttt{Instance} at a time.
+
+\begin{listing}[htbp]
+    \inputminted[
+        fontsize=\small,
+        linenos,
+        frame=lines
+    ]{csharp}{code/singleton.cs}
+    \caption{Singleton object definition of \texttt{GearBoxSettings}}
+    \label{lst:singleton}
+\end{listing}
+
+Since \texttt{Instance} is defined as a \texttt{static} variable, it can be accessed from any file in the code by calling \texttt{GearBoxSettings.Instance}. Without using a singleton object, in order to access \texttt{GearBoxSettings}, an instance of this object would need to be passed to every class via a function call. This can cause data integrity issues if the instance is not passed along properly. Using a singleton object simplifies the process and reduces the amount of possible errors significantly. It also makes the code easier to maintain and build upon in the future if needed since the code is more simple.
+
+\subsection{Project File Structure}
+
+In order to keep all code organized, a file system was designed which allows files to be organized and found much easier. Additionally, this helps us implement the MVVM architecture as described in Section~\ref{sec:design_sys} since each part of the application can be separated more easily. In the old gear design system (\cite{holman_automated_2018}), the interface and backend code were defined in the same files. The entire codebase for that system was only four files (each Windows Form window is divided into two or three files, this is considering them to be all as one file). Some of these files are thousands of lines of code long. Finding any code in a system like this is extremely difficult. Our project's file system is described in Table~\ref{tab:file_structure}.
+
+\begin{table}[htb]
+    \centering
+    \caption{Project File Structure}
+    \label{tab:file_structure}
+    \begin{tabularx}{\textwidth}{||Y|Y|Y||}
+        \hline Folder Name & Purpose & Example Files Contained Within \\ \hline \hline
+        3rd & 3rd party libraries (including SolidWorks API) & SldWorks.dll \\ \hline
+        Assets & Assets of the project (e.g., icons) & backbutton.png \\ \hline
+        Controls & Gearbox property control windows & GearPropControl.xaml.cs \\ \hline
+        Helpers & Many helper classes and methods & UnitConverters.cs \\ \hline
+        Models & MVVM model classes (no gear objects) & GearBoxSettings.cs \\ \hline
+        SolidWorks & MVVM model classes (gear objects), SolidWorksMacro & Gear.cs \\ \hline
+        Templates & Gear template files for SolidWorks & Parametric Spur Template.SLDPRT \\ \hline
+        Views & The different pages/windows of the application & EditGearSetView.xaml \\ \hline
+    \end{tabularx}
+\end{table}
+
+In addition to these project subfolders, there are some files in the root directory of the project. Most of these are default files required by WPF that we will never modify. The one notable file is MainWindow.xaml (and MainWindow.xaml.cs) which is the main window of the project. This is in the root folder (and not the Views folder) because it is the most important file of the project so it makes sense to put it in the project root.
+
+\subsection{3D Gear Drawing}
+TBD.
+
+\subsection{2D Shaft Drawing}
+
+
+
+
+\end{doublespace}
